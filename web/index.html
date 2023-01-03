@@ -1,10 +1,36 @@
 <!DOCTYPE html>
 <html>
-<title>HTML Tutorial</title>
-<body>
+<title>Workig Places</title>
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+  <script>
+    var displayResult = (result) => {
+      $("#workplace").text(result);
+    }
+    var randomWorkingPlace = () => {
+      var myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+      var requestOptions = {
+        method: 'GET',
+        headers: myHeaders,
+        redirect: 'follow'
+      };
+          
+      fetch("https://uqzfagtu61.execute-api.eu-central-1.amazonaws.com/dev/", requestOptions)
+            .then(response => response.text())
+            .then(result => displayResult(JSON.parse(result).body.Gade))
+            .catch(error => console.log('error', error));
+          }
+  </script>
+</head>
+<body onload="randomWorkingPlace()">
 
-<h1>This is a heading</h1>
-<p>This is a paragraph.</p>
-
+<h1>Working Places</h1>
+<p>
+  <div id='workplace'></div>
+</p>
+<p>
+  <button onclick="randomWorkingPlace()">Other Working Place</button>
+</p>
 </body>
 </html>
